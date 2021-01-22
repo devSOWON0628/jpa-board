@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.Optional;
 
 import javax.print.attribute.standard.PageRanges;
@@ -30,7 +31,7 @@ public class MainController {
 	@GetMapping("")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView("write");
-		mv.addObject("post",repository.findAllByOrderByRegTimeDesc());
+		mv.addObject("post",repository.findAllByOrderByTimeDesc());
 		return mv;
 	}
 	
@@ -50,22 +51,22 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("main");
 		PagingVO vo = new PagingVO((int)repository.count(), page, 10); 
 		mv.addObject("paging", vo); 	
-		mv.addObject("all", repository.findAll((PageRequest.of(page-1,10, Sort.Direction.ASC ,"id"))).getContent());
+		mv.addObject("all", repository.findAll((PageRequest.of(page-1,10, Sort.Direction.DESC ,"time"))).getContent());
 		return mv;
 	}
 	
 	@GetMapping("/read")
 	public ModelAndView postDetail(@RequestParam("num")String num) {
 		ModelAndView mv = new ModelAndView("postDetail");
-		mv.addObject("post",(repository.findById(num)));
+		mv.addObject("post",(repository.findById(num)).get());
 		return mv;
 	}
 
 	
-//	@PutMapping("/update/post")
-//	public void updatePost(Post post) {
-//		repository.save(post)
-//	}
+	@PutMapping("/update/post")
+	public void updatePost(Post post) {
+		repository.updatePost(post.getTitle(), post.getWriter(), post.getContent(), post.getId());
+	}
 	
 	@DeleteMapping("/delete/post/one")
 	public void deletePost(@RequestParam("num")String num) {

@@ -37,5 +37,6 @@ public class Post implements Serializable {
 	
 	@Column
 	@NonNull
-	private Date regTime = new Date();
+	private Date time = new Date() ;
+		
 }
