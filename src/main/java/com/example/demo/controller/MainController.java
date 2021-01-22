@@ -62,7 +62,6 @@ public class MainController {
 		return mv;
 	}
 
-	
 	@PutMapping("/update/post")
 	public void updatePost(Post post) {
 		repository.updatePost(post.getTitle(), post.getWriter(), post.getContent(), post.getId());
