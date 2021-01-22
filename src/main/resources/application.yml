@@ -1,0 +1,35 @@
+server:
+  port: 8888  # Spring boot Server port
+
+spring:
+  h2:
+    console:
+      enabled: true  # H2 웹 콘솔을 사용하겠다는 의미
+      path: /test_db  # 콘솔의 경로
+  mvc:
+     view:
+        prefix: /WEB-INF/views/
+        suffix: .jsp
+  datasource:
+    driver-class-name: org.h2.Driver  #h2 드라이버 설정
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+logging:
+  charset:
+    console: 'UTF-8'
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger{35} : %msg %n'
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
