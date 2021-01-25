@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.Optional;
 
 import javax.print.attribute.standard.PageRanges;
+import javax.servlet.http.Cookie;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.Entity.Post;
 import com.example.demo.repository.PostRepository;
+import com.example.demo.util.CommonUtils;
 import com.example.demo.vo.PagingVO;
 
 @RestController
@@ -38,6 +41,9 @@ public class MainController {
 	// post ajax
 	@PostMapping("/insert/post")
 	public void insertPost(Post post) {
+		post.setContent(CommonUtils.XSSFilter(post.getContent()));
+		post.setTitle(CommonUtils.XSSFilter(post.getTitle()));
+		post.setWriter(CommonUtils.XSSFilter(post.getWriter()));
 		repository.save(post);
 	}
 	
@@ -47,11 +53,13 @@ public class MainController {
 	}
 	
 	@GetMapping("/home")
-	public ModelAndView boardList(@RequestParam(defaultValue="1", required=false)int page) {
+	public ModelAndView boardList(@RequestParam(value="page", defaultValue="1", required=false)int thisPage
+								, @RequestParam(value="per", defaultValue="10", required=false)int perPageCnt) {
 		ModelAndView mv = new ModelAndView("main");
-		PagingVO vo = new PagingVO((int)repository.count(), page, 10); 
+		PagingVO vo = new PagingVO((int)repository.count(), thisPage, perPageCnt); 
 		mv.addObject("paging", vo); 	
-		mv.addObject("all", repository.findAll((PageRequest.of(page-1,10, Sort.Direction.DESC ,"time"))).getContent());
+		mv.addObject("all", repository.findAll((PageRequest.of(thisPage-1,perPageCnt, Sort.Direction.DESC ,"time"))).getContent());
+		
 		return mv;
 	}
 	

@@ -68,13 +68,14 @@ function insertPost(){
 		url : '/insert/post',
 		data : $("form").serialize(),
 		success : function(data) {
+			window.location.href = '/home';
 			},
 		error : function(data) {
 			alert("저장을 실패했습니다");
 			return 0;
 		}
 	});
-	window.location.href = '/home';
+	
 	
 }
 

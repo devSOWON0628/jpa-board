@@ -17,7 +17,7 @@ public interface PostRepository extends PagingAndSortingRepository<Post, String>
 	List<Post> findAllByOrderByTimeDesc ();
 	
 	@Transactional
-	@Modifying // select 문이 아님을 나타낸다
+	@Modifying 
 	@Query(value="UPDATE Post t SET t.title = :title , t.writer = :writer , t.content = :content , t.time = now() WHERE (t.id = :id)", nativeQuery = true)
 	void updatePost(@Param("title") String title, @Param("writer")String writer, @Param("content")String content,@Param("id")String id);
 	

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Post;
 import com.example.demo.repository.PostRepository;
+import com.example.demo.util.CommonUtils;
 
 @Service
 public class RepositoryService {
@@ -19,6 +20,9 @@ public class RepositoryService {
 	}
 	
 	public void save(Post post) {
+		post.setContent(CommonUtils.XSSFilter(post.getContent()));
+		post.setTitle(CommonUtils.XSSFilter(post.getTitle()));
+		post.setWriter(CommonUtils.XSSFilter(post.getWriter()));
 		repository.save(post);
 	}
 

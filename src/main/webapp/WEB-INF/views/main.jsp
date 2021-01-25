@@ -7,6 +7,27 @@
 <html>
 <head>
 <meta charset="EUC-KR">
+<style type="text/css">
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #555;
+}
+</style>
 </head>
 
 <body>
@@ -40,7 +61,7 @@
 			<c:if test="${paging.startPage != 1 }">
 				
 				<li class="page-item">
-					<a class="page-link" href="/home?page=${paging.startPage - 1 }" tabindex="-1"> 
+					<a class="page-link" href="/home?page=${paging.startPage - 1 }&per=${paging.cntPerPage}" tabindex="-1"> 
 					Previous 
 					</a>
 				</li>
@@ -48,13 +69,13 @@
 			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
 				<c:choose>
 					<c:when test="${p == paging.nowPage }">
-						<a class="page-link" href="/home?page=${p}"> 
+						<a class="page-link" href="/home?page=${p}&per=${paging.cntPerPage}"> 
 						<b>${p}</b>
 						</a>
 					</c:when>
 					<c:when test="${p != paging.nowPage }">
 					<li class="page-item">
-						<a class="page-link" href="/home?page=${p}">
+						<a class="page-link" href="/home?page=${p}&per=${paging.cntPerPage}">
 						${p}
 						</a>
 					</li>
@@ -63,7 +84,7 @@
 			</c:forEach>
 			<c:if test="${paging.endPage != paging.lastPage}">
 				<li class="page-item">
-					<a class="page-link" href="/home?page=${paging.endPage+1 }"> Next </a>
+					<a class="page-link" href="/home?page=${paging.endPage+1 }&per=${paging.cntPerPage}"> Next </a>
 				</li>
 			</c:if>
 			</ul>
@@ -72,7 +93,6 @@
         </div>  
 	</div> 	
 </body>
-<!-- <script src="${contextPath}/js/write.js" charset="UTF-8"></script> -->
 <script type="text/javascript">
 function onePost(id){
 	window.location.href = '/read?num='+id;
@@ -91,7 +111,6 @@ function deleteOnePost(id){
 			return 0;
 		}
 	});
-	
 }
 </script>
 </html>

@@ -8,9 +8,8 @@
 <meta charset="EUC-KR">
 </head>
 <body>
-<div class="container md-0 py-4 ">
-	<div class="container">
-        <div class="card p-4">
+<div class="container p-4 ">
+        <div class="p-4 shadow">
 	        <br>
             <form id="form" enctype="multipart/form-data" name="form">
             	<input type="hidden" id="id" name="id" value="${post.id}">
@@ -26,10 +25,7 @@
             </form>
             <button class="btn col-1 btn-outline-primary btn-sm" onclick="change()" id="change-btn">수정</button>
             <!--<p style="color: red;" id="warning"></p> -->            
-        </div>
-        
-	</div>
-	
+        </div>	
 </div>
 </body>
 <script type="text/javascript">
