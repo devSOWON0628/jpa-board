@@ -1,10 +1,10 @@
 server:
-  port: 8888  # Spring boot Server port
+  port: 8000  # Spring boot Server port
 
 spring:
   h2:
     console:
-      enabled: true  # H2 웹 콘솔을 사용하겠다는 의미
+      enabled: true   # H2 웹 콘솔을 사용하겠다는 의미
       path: /test_db  # 콘솔의 경로
   mvc:
      view:

@@ -34,7 +34,7 @@
         </div>  
 	</div>
     	<div class="container py-5">
-        	<div class="row" id="inner" data-masonry="{&quot;percentPosition&quot;: true }" style="position: relative;">
+        	<div class="row" id="inner" data-masonry='{"percentPosition": true }' style="position: relative;">
         		<c:forEach var="item" items="${post}">
 	        		<div class="col-sm-6 col-lg-4 mb-4">
 			                <div class="card mb-4 shadow-sm">
@@ -42,7 +42,7 @@
 			                        <a class ="card-text" href="/read?num=${item.id}"><h5>${item.title}</h5></a>
 			                        <p class="card-text">${item.content}</p>
 			                        <div class="d-flex justify-content-between align-items-center">
-			                            <div class="btn-group">
+			                           <div class="btn-group">
 			           				       <button type="button" class="btn btn-sm btn-outline-secondary" onclick ="location.href = '/read?num=${item.id}' ">Edit</button>
 			         				   </div>
 			                            <small class="text-muted">  by ${item.writer}</small>
@@ -53,45 +53,42 @@
         		</c:forEach>
 	        	
             </div>
-            <button type="button" id="sessionClear"class="btn btn-sm btn-secondary float-right" onclick="deleteAllPost()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                	<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
-					<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
-				</svg>
-            </button>
         </div>    
 </body>
 <script type="text/javascript">
+
 function insertPost(){
 	$.ajax({
 		type : 'POST',
-		url : '/insert/post',
+		url : '/post',
 		data : $("form").serialize(),
 		success : function(data) {
-			window.location.href = '/home';
 			},
 		error : function(data) {
 			alert("저장을 실패했습니다");
 			return 0;
 		}
 	});
-	
+	window.location.href = '/home';
 	
 }
 
-function deleteAllPost(){
-	$.ajax({
-		type : 'DELETE',
-		url : '/delete/post',
-		data : {},
-		success : function(data) {
-			location.reload();
-			},
-		error : function(data) {
-			alert("데이터 불러오기를 실패했습니다.");
-			return 0;
-		}
-	});
+
+function CheckInput(){ 
+	if(title.value.trim() == ''){
+		document.getElementById("warning").innerHTML = "제목을 입력해주세요!";
+		title.focus();
+		return 0;
+	}else if(writer.value.trim() == ''){
+		document.getElementById("warning").innerHTML = "작성자를 입력해주세요!";
+		writer.focus();
+		return 0;
+	}else if(content.value.trim() == ''){
+		document.getElementById("warning").innerHTML = "내용을 입력해주세요!";
+		content.focus();
+		return 0;
+    }
+    return 1;
 }
 </script>
 </html>

@@ -28,11 +28,11 @@
 <body>
 	<header class="container py-3">
     	<div class="text-center">
-    		<a class="title text-dark" href="/home">Note</a>
+    		<a class="title text-dark" href="/?page=1&size=10">Note</a>
       	</div>
       	<hr>
       	<nav class="nav d-flex justify-content-between text-dark">
-	      <a class="p-2 text-dark" href="/" id="write-menu">작성</a>
+	      <a class="p-2 text-dark" href="/form" id="write-menu">작성</a>
 	      <a class="py-2 text-dark" href="#">메뉴메뉴</a>
 	      <a class="py-2 text-dark" href="#">메뉴메뉴</a>
 	      <a class="p-2 text-dark" href="#">메뉴메뉴</a>

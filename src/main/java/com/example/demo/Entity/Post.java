@@ -1,42 +1,52 @@
 package com.example.demo.Entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+
+import org.springframework.stereotype.Service;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 
-@Data
-@Entity
+@Getter
+@Setter
 @NoArgsConstructor
+@Entity
 public class Post implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String id;
+	private Integer id;
 	
-	@Column
+	@Column(nullable = false)
 	@NonNull
 	private String title;
 	
-	@Column
+	@Column(nullable = false)
 	@NonNull
 	private String writer;
 	
-	@Column
+	@Lob
+	@Column(nullable = false)
 	@NonNull
 	private String content;
 	
-	@Column
+	@Column(nullable = false)
 	@NonNull
 	private Date time = new Date() ;
-		
 }

@@ -12,13 +12,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.demo.Entity.Post;
 
-public interface PostRepository extends PagingAndSortingRepository<Post, String>{
+public interface PostRepository extends PagingAndSortingRepository<Post, Integer>{
 
-	List<Post> findAllByOrderByTimeDesc ();
-	
-	@Transactional
-	@Modifying 
-	@Query(value="UPDATE Post t SET t.title = :title , t.writer = :writer , t.content = :content , t.time = now() WHERE (t.id = :id)", nativeQuery = true)
-	void updatePost(@Param("title") String title, @Param("writer")String writer, @Param("content")String content,@Param("id")String id);
+	List<Post> findAllByOrderByTimeDesc();
 	
 }
