@@ -39,7 +39,7 @@
 	        		<div class="col-sm-6 col-lg-4 mb-4">
 			                <div class="card mb-4 shadow-sm">
 			                    <div class="card-body">
-			                        <a class ="card-text" href="/read?num=${item.id}"><h5>${item.title}</h5></a>
+			                        <h5><a class ="card-text" href="/post/${item.id}">${item.title}</a></h5>
 			                        <p class="card-text">${item.content}</p>
 			                        <div class="d-flex justify-content-between align-items-center">
 			                           <div class="btn-group">

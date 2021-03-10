@@ -19,7 +19,7 @@ spring:
       test-while-idle: true
       validation-query: SELECT 1
   jpa:
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: update
 

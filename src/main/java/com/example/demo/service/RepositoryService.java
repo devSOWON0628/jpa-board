@@ -8,46 +8,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.Post;
 import com.example.demo.Entity.Reply;
 import com.example.demo.repository.PostRepository;
+import com.example.demo.repository.ReplyRepository;
 import com.example.demo.vo.PagingVO;
 
 @Service
 public class RepositoryService {
 	@Autowired 
-	PostRepository repository; 
+	PostRepository postRepository; 
 	
 	@Autowired
 	ReplyRepository replyRepository;
 	
 	public void deleteCheckedPosts(List<Map<String, Object>> param) {
 		for (Map<String, Object> map : param) {
-			repository.deleteById(Integer.parseInt(map.get("id").toString()));
+			postRepository.deleteById(Integer.parseInt(map.get("id").toString()));
 		}
 	}
 
 	public Object getContentsInPage() {
-		return repository.findAllByOrderByTimeDesc();
+		return postRepository.findAllByOrderByTimeDesc();
 	}
 
 	public void savePost(Post post) {
-		repository.save(post);
+		postRepository.save(post);
 	}
 
 	public void deleteAllPost() {
-		repository.deleteAll();
+		postRepository.deleteAll();
 	}
 
 	public Post getOnePost(Integer num) {
-		return repository.findById(num).get();
+		return postRepository.findById(num).get();
 	}
 
 	public PagingVO createVo(Pageable pageable) {
-		return new PagingVO((int)repository.count(), pageable.getPageNumber(), pageable.getPageSize());
+		return new PagingVO((int)postRepository.count(), pageable.getPageNumber(), pageable.getPageSize());
 	}
 
 	public void insertReply(Reply reply) {
@@ -67,10 +69,12 @@ public class RepositoryService {
 	}
 
 	public List<Post> getContents(Pageable pageable) {
-		return repository.findAll(PageRequest.of(pageable.getPageNumber()-1, pageable.getPageSize(), Sort.Direction.DESC , "time", "id")).getContent();
+		Page<Post> result = postRepository.findAll(PageRequest.of(pageable.getPageNumber()-1	// 현재 몇 페이지인지 0부터 시작하기 때문에 1빼줌
+																, pageable.getPageSize()		// 한 페이지당 몇개를 보여줄지
+																, Sort.Direction.DESC 			// 정렬을 어떻게
+																, "time"						// 무엇으로 정리할것인지
+																, "id"));
+		return result.getContent();
 	}
 
-	
-
-	
 }

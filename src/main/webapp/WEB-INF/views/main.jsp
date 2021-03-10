@@ -7,11 +7,16 @@
 <html>
 <head>
 <meta charset="EUC-KR">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=071c20ffd6270b98a10688b1c85cf132&libraries=services"></script>
 </head>
 
 <body>
 	<div class="container p-4">
 		<div class="p-4 shadow"><br>
+		<input type="button" onclick="sample5_execDaumPostcode()" class="btn btn-sm btn-secondary float-right" value="주소 검색">
+		<input type="text" id="sample5_address" onclick="sample5_execDaumPostcode()" placeholder="주소" class="form-control form-control-sm col-2 float-right"> <br>
+		<div id="map" class ="mb-5 mt-3" style="width:100%;height:50vh; "></div>
 			<table class="table table-hover">
 				<tr>
 					<td style="width: 60%;"><h5>전체</h5></td>
@@ -28,7 +33,7 @@
 						<tr>
 							<td onclick="onePost(${item.id})">${item.title}</td>
 							<td>${item.writer}</td>
-							<td>${fn:substring(item.time,10,16) }</td>
+							<td>${fn:substring(item.time,10,16)}</td>
 							<td><input type="checkbox" name="chk" value="${item.id}"></td>
 						</tr>
 					</c:forEach>
@@ -44,24 +49,24 @@
 				<nav>
 					<ul class="pagination justify-content-center">
 					
-						<c:if test="${paging.startPage != 1 }">	 
+						<c:if test="${paging.startPage != 1 }">	 <!-- 시작 페이지가 첫페이지가 아니면 previous가 뜨게 -->
 							<li class="page-item">
-								<a class="page-link" href="/?page=${paging.startPage - 1 }&size=${paging.cntPerPage}" > 
+								<a class="page-link" href="/post?page=${paging.startPage - 1 }&size=${paging.cntPerPage}" > 
 								Previous 
 								</a>
 							</li>
 						</c:if>
 					
-						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p"> <!-- 현재 페이지면 bold 아니면 일반 -->
 							<c:choose>
 								<c:when test="${p == paging.nowPage }">
-									<a class="page-link" href="/?page=${p}&size=${paging.cntPerPage}"> 
+									<a class="page-link" href="/post?page=${p}&size=${paging.cntPerPage}"> 
 									<b>${p}</b>
 									</a>
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
 								<li class="page-item">
-									<a class="page-link" href="/?page=${p}&size=${paging.cntPerPage}">
+									<a class="page-link" href="/post?page=${p}&size=${paging.cntPerPage}">
 									${p}
 									</a>
 								</li>
@@ -69,9 +74,9 @@
 							</c:choose>
 						</c:forEach>
 					
-						<c:if test="${paging.endPage != paging.lastPage}">
+						<c:if test="${paging.endPage != paging.lastPage}"> <!-- 마지막 페이지가 진짜 마지막의 마지막이 아니면 Next가 뜨게 -->
 							<li class="page-item">
-								<a class="page-link" href="/?page=${paging.endPage+1 }&size=${paging.cntPerPage}"> Next </a>
+								<a class="page-link" href="/post?page=${paging.endPage+1 }&size=${paging.cntPerPage}"> Next </a> <!-- 내가 1이었으면 마지막이 5니까 6으로 2였으면 7로 이동 -->
 							</li>
 						</c:if>
 					
@@ -95,7 +100,7 @@ function checkAll(){
 }
 
 function onePost(id){
-	window.location.href = '/post?num='+id;
+	window.location.href = '/post/'+id;
 }
 
 function deletePosts(){
@@ -120,5 +125,50 @@ function deletePosts(){
 	});    
 
 }
+	
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.537108, 127.005476), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+    mapContainer.className += " shadow";
+
+    //지도를 미리 생성
+    var map = new daum.maps.Map(mapContainer, mapOption);
+    //주소-좌표 변환 객체를 생성
+    var geocoder = new daum.maps.services.Geocoder();
+    //마커를 미리 생성
+    var marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.537187, 127.005476),
+        map: map
+    });
+    
+    function sample5_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = data.address; // 최종 주소 변수
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("sample5_address").value = addr;
+                // 주소로 상세 정보를 검색
+                geocoder.addressSearch(data.address, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+                    }
+                });
+            }
+        }).open();
+    }
 </script>
 </html>

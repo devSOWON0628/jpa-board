@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
+import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.print.attribute.standard.PageRanges;
 import javax.servlet.http.Cookie;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,19 +38,21 @@ import com.example.demo.vo.PagingVO;
 @RestController
 public class MainController {
 	
+	private static String id() {
+        return UUID.randomUUID().toString().replaceAll("-","");
+    }
+	
 	@Autowired
 	RepositoryService service;
 
-	// 메인화면
-//	@GetMapping
-//	public ModelAndView boardList(@RequestParam(value="page", defaultValue="1", required=false) int thisPage
-//								, @RequestParam(value="size", defaultValue="10", required=false) int perPageCnt) {
-//		ModelAndView mv = new ModelAndView("main");
-//		mv.addObject("paging", service.createVo(thisPage, perPageCnt)); 	
-//		mv.addObject("all", service.getContents(thisPage, perPageCnt)); 
-//		return mv;
-//	}
 	@GetMapping
+	public ModelAndView mainPage() {
+		ModelAndView mv = new ModelAndView("header");
+		System.out.println(id());
+		return mv;
+	}
+	
+	@GetMapping("/post")
 	public ModelAndView boardList(Pageable pageable) {
 		ModelAndView mv = new ModelAndView("main");
 		mv.addObject("paging", service.createVo(pageable)); 	
@@ -56,15 +61,15 @@ public class MainController {
 	}
 	// 글 작성 폼
 	@GetMapping("/form")
-	public ModelAndView main() {
+	public ModelAndView writePost() {
 		ModelAndView mv = new ModelAndView("write");
 		mv.addObject("post",service.getContentsInPage());
 		return mv;
 	}
 	
 	// 글 가져오기
-	@GetMapping("/post")
-	public ModelAndView postDetail(@RequestParam("num")Integer num) {
+	@GetMapping("/post/{num}")
+	public ModelAndView postDetail(@PathVariable("num") Integer num) {
 		ModelAndView mv = new ModelAndView("postDetail");
 		mv.addObject("post",service.getOnePost(num));
 		mv.addObject("re",service.getReply(num));
@@ -98,5 +103,30 @@ public class MainController {
 	public void deleteReply(@RequestParam("id")String id) {
 		service.deleteOnReply(id);
 	}
+	/*
+	@PostMapping("/stores")
+	public void newStore(Reply reply) {
+	}
+	
+	@GetMapping("/stores")
+	public List<Reply> allStores(){
+		return null;
+	}
+	
+	@GetMapping("/stores/{id}")
+	public Reply oneStore(@PathVariable("id") String storeUuid) {
+		return null;
+	}
+	
+	@PutMapping("/stores")
+	public void updateStore(Reply reply) {
+		
+	}
+	
+	@DeleteMapping("/stores/{id}")
+	public void deleteStore(@PathVariable("id") String storeUuid) {
+	}
+	*/
+	
 	
 }

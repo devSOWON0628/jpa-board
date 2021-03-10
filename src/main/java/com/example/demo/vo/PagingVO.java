@@ -47,8 +47,8 @@ public class PagingVO {
 	}
 	// DB 쿼리에서 사용할 start, end값 계산
 	public void calcStartEnd(int nowPage, int cntPerPage) {
-		setEnd(nowPage * cntPerPage);
-		setStart(getEnd() - cntPerPage + 1);
+		setEnd(nowPage * cntPerPage); 			// 그 페이지 내 item의 end rownum
+		setStart(getEnd() - cntPerPage + 1);	// 그 페이지 내 item의 start rownum
 	}
 	
 }

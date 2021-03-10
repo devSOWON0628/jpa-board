@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -15,5 +16,4 @@ import com.example.demo.Entity.Post;
 public interface PostRepository extends PagingAndSortingRepository<Post, Integer>{
 
 	List<Post> findAllByOrderByTimeDesc();
-	
 }

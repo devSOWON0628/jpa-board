@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&amp;display=swap" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 <style type="text/css">
 .title {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
@@ -28,12 +29,12 @@
 <body>
 	<header class="container py-3">
     	<div class="text-center">
-    		<a class="title text-dark" href="/?page=1&size=10">Note</a>
+    		<a class="title text-dark" href="/">Note</a>
       	</div>
       	<hr>
       	<nav class="nav d-flex justify-content-between text-dark">
 	      <a class="p-2 text-dark" href="/form" id="write-menu">작성</a>
-	      <a class="py-2 text-dark" href="#">메뉴메뉴</a>
+	      <a class="py-2 text-dark" href="/post?page=1&size=10">모든 글</a>
 	      <a class="py-2 text-dark" href="#">메뉴메뉴</a>
 	      <a class="p-2 text-dark" href="#">메뉴메뉴</a>
 	      <a class="p-2 text-dark" href="#">메뉴메뉴</a>

@@ -6,11 +6,15 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-@Data
+import lombok.Setter;
+@Getter
 @NoArgsConstructor
+@Setter
 @Entity
 public class Reply implements Serializable{
 	
@@ -28,6 +32,15 @@ public class Reply implements Serializable{
 	@Column(nullable = false)
 	@NonNull
 	private Date time = new Date() ;
+
+	@Builder
+	public Reply(Integer reply_id, String boardId, @NonNull String content, @NonNull Date time) {
+		super();
+		this.reply_id = reply_id;
+		this.boardId = boardId;
+		this.content = content;
+		this.time = time;
+	}
 	
 	
 }
