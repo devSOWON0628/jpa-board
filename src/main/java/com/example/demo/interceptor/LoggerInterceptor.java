@@ -21,7 +21,8 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter  {
 			response.sendRedirect("https://gw.gsitm.com/");
 			return false;
 		}
-		logger.info("Interceptor > preHandle cookie : "+cookies[0].getValue());
+		logger.info("Interceptor > preHandle cookie "+cookies[0].getName()+" : "+cookies[0].getValue());
+		logger.info("Interceptor > preHandle");
 		return true;
     }
 
@@ -43,6 +44,5 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter  {
 		super.afterConcurrentHandlingStarted(request, response, handler);
 		logger.info("Interceptor > afterConcurrentHandlingStarted");
 	}
-    
-    
+
 }

@@ -31,7 +31,7 @@ public class RepositoryService {
 			postRepository.deleteById(Integer.parseInt(map.get("id").toString()));
 		}
 	}
-
+	
 	public Object getContentsInPage() {
 		return postRepository.findAllByOrderByTimeDesc();
 	}

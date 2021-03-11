@@ -10,6 +10,6 @@ public class MvcConfiguration implements WebMvcConfigurer{
 	    public void addInterceptors(InterceptorRegistry registry) {
 	        registry.addInterceptor(new LoggerInterceptor())
 	                .addPathPatterns("/*")
-	                .excludePathPatterns("/form/**"); // test 쪽도 예외처리
+	                .excludePathPatterns("/form/**"); 
 	    }
 }

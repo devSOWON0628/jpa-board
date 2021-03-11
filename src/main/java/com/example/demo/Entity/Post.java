@@ -22,11 +22,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
+@ToString
 public class Post implements Serializable {
 
 	@Id
