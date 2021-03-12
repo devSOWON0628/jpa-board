@@ -22,7 +22,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter  {
 			return false;
 		}
 		logger.info("Interceptor > preHandle cookie "+cookies[0].getName()+" : "+cookies[0].getValue());
-		logger.info("Interceptor > preHandle");
+//		logger.info("Interceptor > preHandle");
 		return true;
     }
 
