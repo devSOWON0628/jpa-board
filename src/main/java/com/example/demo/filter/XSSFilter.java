@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
-
+/**
+ * 동작 안함..
+ */
 @Slf4j
 @WebFilter(urlPatterns= "/**")
 public class XSSFilter implements Filter {

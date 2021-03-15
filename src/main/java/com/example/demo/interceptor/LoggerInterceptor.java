@@ -1,5 +1,8 @@
 package com.example.demo.interceptor;
 
+import java.util.Iterator;
+import java.util.Optional;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,14 +19,22 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter  {
 	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// 컨트롤러(즉 RequestMapping이 선언된 메서드 진입) 실행 직전에 동작.
-		Cookie[] cookies = request.getCookies() ;
+		Cookie[] cookies =  request.getCookies();
 		if(cookies == null) {
-			response.sendRedirect("https://gw.gsitm.com/");
+			logger.info("쿠키 없을 무...");
+			response.sendRedirect("/");
 			return false;
 		}
-		logger.info("Interceptor > preHandle cookie "+cookies[0].getName()+" : "+cookies[0].getValue());
-//		logger.info("Interceptor > preHandle");
-		return true;
+		for (Cookie cookie : cookies) {
+			if("auth".equals(cookie.getName()) && "true".equals(cookie.getValue())) {
+				logger.info("쿠키 있을 유");
+				return true;
+			}
+		}
+		logger.info("쿠키가 없어서 갔다왔어용");
+		response.sendRedirect("/");
+		return false;
+		
     }
 
     @Override
@@ -40,7 +51,6 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter  {
 
 	@Override
 	public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		// Servlet 3.0 부터 비동기 요청이 가능해짐에 따라 비동기 요청 시 PostHandle와 afterCompletion메서드를 수행하지 않고 이 메서드를 수행하게 됩니다. (Spring에서 제공함)
 		super.afterConcurrentHandlingStarted(request, response, handler);
 		logger.info("Interceptor > afterConcurrentHandlingStarted");
 	}

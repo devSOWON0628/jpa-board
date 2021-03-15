@@ -9,7 +9,7 @@ public class MvcConfiguration implements WebMvcConfigurer{
 	 @Override
 	    public void addInterceptors(InterceptorRegistry registry) {
 	        registry.addInterceptor(new LoggerInterceptor())
-	                .addPathPatterns("/*")
+	                .addPathPatterns("/api/**")
 	                .excludePathPatterns("/form/**"); 
 	    }
 }

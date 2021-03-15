@@ -36,6 +36,7 @@ import com.example.demo.util.CommonUtils;
 import com.example.demo.vo.PagingVO;
 
 @RestController
+@RequestMapping({"/api"})
 public class MainController {
 	
 	private static String id() {
