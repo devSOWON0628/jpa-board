@@ -23,6 +23,7 @@ public class Swagger2Config {
                 .build();
     }
 
+    //modify 
     @Bean
     public Docket commonApi() {
         return new Docket(DocumentationType.SWAGGER_2)
