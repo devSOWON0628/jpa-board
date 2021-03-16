@@ -22,8 +22,6 @@ public class Swagger2Config {
                 .description("게시판")
                 .build();
     }
-
-    //modify 
     @Bean
     public Docket commonApi() {
         return new Docket(DocumentationType.SWAGGER_2)
