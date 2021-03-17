@@ -29,7 +29,7 @@
 <body>
 	<header class="container py-3">
     	<div class="text-center">
-    		<a class="title text-dark" href="/">TITLE</a>
+    		<a class="title text-dark" href="/">TITLE2</a>
       	</div>
       	<hr>
       	<nav class="nav d-flex justify-content-between text-dark">
